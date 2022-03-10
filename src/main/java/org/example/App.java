@@ -1,10 +1,18 @@
 package org.example;
 
+import org.example.model.Customer;
+import org.example.model.Order;
 import org.example.model.Product;
-import org.example.service.ProductService;
+import org.example.service.CustomerServiceImpl;
+import org.example.service.OrderServiceImpl;
+import org.example.service.ProductServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Hello world!
@@ -19,11 +27,29 @@ public class App
         // ProductService productService = (ProductService) context.getBean();
 
         Product product = new Product(101,"SamsungA52s",33000.0,4.3,123,null,null,null);
-        ApplicationContext factory  = new AnnotationConfigApplicationContext(AppConfig.class);
+        Customer customer =  new Customer(101,"Akhil", new ArrayList<String>(Arrays.asList("2094/7GA New Delhi-110008")),"8285672135","akhil.mumgain@digit88.com","123Aa@");
+        customer.setOrderList(Arrays.asList(new Order(123,1200.0,product)));
+        AnnotationConfigApplicationContext factory  = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        ProductService productService = factory.getBean(ProductService.class);
+        // annotation based
+//        ProductServiceImpl productServiceImpl = factory.getBean(ProductServiceImpl.class);
+//        productServiceImpl.getProductDetails(product);
 
+        CustomerServiceImpl customerService = factory.getBean(CustomerServiceImpl.class);
+        customerService.getCustomerDetails(customer);
+
+        // Auto wiring
+        customerService.getOrderDetails(customer);
+
+        // @Service annotation
+        OrderServiceImpl orderService = factory.getBean(OrderServiceImpl.class);
+        orderService.getOrderDetails(Arrays.asList(new Order(123,1200.0,product)));
+
+        // factory method
+        ProductServiceImpl productService = (ProductServiceImpl) factory.getBean("product");
         productService.getProductDetails(product);
+
+        factory.close();
 
     }
 }
