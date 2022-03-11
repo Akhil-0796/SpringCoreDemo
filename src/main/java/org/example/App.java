@@ -1,18 +1,16 @@
 package org.example;
 
+import org.example.config.AppConfig;
 import org.example.model.Customer;
 import org.example.model.Order;
 import org.example.model.Product;
 import org.example.service.CustomerServiceImpl;
 import org.example.service.OrderServiceImpl;
 import org.example.service.ProductServiceImpl;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Hello world!
@@ -48,6 +46,10 @@ public class App
         // factory method
         ProductServiceImpl productService = (ProductServiceImpl) factory.getBean("product");
         productService.getProductDetails(product);
+
+        // @Import example
+        Customer customer1 = (Customer) factory.getBean("customer");
+        System.out.printf("Email : "+customer1.getCustomerEmail());
 
         factory.close();
 
