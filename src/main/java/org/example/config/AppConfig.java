@@ -5,7 +5,9 @@ import org.example.service.OrderServiceImpl;
 import org.example.service.ProductServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,6 +17,16 @@ public class AppConfig {
     @Bean("product")
     public ProductServiceImpl getProductService(){
         return new ProductServiceImpl();
+    }
+
+    @Bean
+    public DataSource dataSource(){
+        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+        driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/akhildb");
+        driverManagerDataSource.setUsername("root");
+        driverManagerDataSource.setPassword("82856721");
+        return driverManagerDataSource;
     }
 
     @Bean

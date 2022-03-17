@@ -36,6 +36,9 @@ public class App
         CustomerServiceImpl customerService = factory.getBean(CustomerServiceImpl.class);
         customerService.getCustomerDetails(customer);
 
+        // JDBC Example
+        System.out.println("----------Name Coming from Data Base = "+customerService.getCustomerById(101));
+
         // Auto wiring
         customerService.getOrderDetails(customer);
 
@@ -50,6 +53,7 @@ public class App
         // @Import example
         Customer customer1 = (Customer) factory.getBean("customer");
         System.out.printf("Email : "+customer1.getCustomerEmail());
+
 
         factory.close();
 
